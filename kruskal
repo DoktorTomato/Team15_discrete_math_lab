@@ -1,0 +1,21 @@
+def kruskal(graph):
+
+    sets = [{node} for node in graph.nodes()]
+
+    line_list = []
+    weight = 0
+
+    sorted_edges = sorted(graph.edges(data=True), key=lambda x: x[2]['weight'])
+
+    for (u, v, w) in sorted_edges:
+        u_set = next(s for s in sets if u in s)
+        v_set = next(s for s in sets if v in s)
+
+        if u_set != v_set:
+            line_list.append((u, v))
+            weight += w['weight']
+
+            u_set.update(v_set)
+            sets.remove(v_set)
+    print(line_list, weight)
+    return line_list, weight
